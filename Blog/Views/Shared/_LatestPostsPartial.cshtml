@@ -1,0 +1,19 @@
+﻿@using Blog.Models
+@model List<Article>
+
+@foreach (var article in Model)
+{
+    <article class="col-block popular__post">
+        <a href="@Url.Action("Index", "Article", new { id = article.Id })" class="popular__thumb">
+            @if (!string.IsNullOrEmpty(article.PhotoPath))
+            {
+                <img src="@article.PhotoPath" alt="@article.Title">}
+            </a>
+        <h5><a href="@Url.Action("Index", "Article", new { id = article.Id })">@article.Title</a></h5>
+        <section class="popular__meta">
+            <span class="popular__author"><span>By</span> @article.ApplicationUser.Nickname</span>
+            <span class="popular__date"><span>on</span> @article.ArticleTime.Value.ToString("g")</span>
+        </section>
+    </article>
+}
+

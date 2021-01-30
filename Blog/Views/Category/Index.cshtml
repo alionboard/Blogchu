@@ -1,0 +1,121 @@
+﻿@using Blog.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Article>
+@{
+    ViewBag.Title = "Category";
+}
+
+<!-- s-content
+    ================================================== -->
+<section class="s-content">
+
+    <div class="row narrow">
+        <div class="col-full s-content__header" data-aos="fade-up">
+            <h1>@ViewBag.name</h1>
+
+            <p class="lead">@ViewBag.category</p>
+        </div>
+    </div>
+
+    <div class="row masonry-wrap">
+        <div class="masonry">
+
+            <div class="grid-sizer"></div>
+
+            @foreach (var article in Model)
+            {
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+
+                    <div class="entry__thumb">
+                        <a href="@Url.Action("Index", "Article", new { id = article.Id })" class="entry__thumb-link">
+                            @if (!string.IsNullOrEmpty(article.PhotoPath))
+                            {
+                                <img class="img-fluid w-50" src="@article.PhotoPath" alt="@article.Title" />
+                            }
+                        </a>
+                    </div>
+
+                    <div class="entry__text">
+                        <div class="entry__header">
+
+                            <div class="entry__date">
+                                <a href="single-standard.html">@article.ArticleTime.Value.ToString("g")</a>
+                            </div>
+                            <h1 class="entry__title">
+                                <a href="@Url.Action("Index", "Article", new { id = article.Id })">@article.Title</a>
+                            </h1>
+
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                                @article.Summary)
+
+                            </p>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                @foreach (var item in article.Categories)
+                                {
+                                    @Html.ActionLink(item.CategoryName, "Index", "Category", new { name = item.CategoryName }, null)
+                                }
+                            </span>
+                        </div>
+                    </div>
+
+                </article> <!-- end article -->
+            }
+
+
+
+        </div> <!-- end masonry -->
+    </div> <!-- end masonry-wrap -->
+
+    <div class="row">
+        <div class="col-full">
+            <nav class="pgn">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Category", new { page }))
+            </nav>
+        </div>
+    </div>
+
+</section> <!-- s-content -->
+
+@section extraS{
+
+    <!-- s-extra
+    ================================================== -->
+    <section class="s-extra">
+
+        <div class="row top">
+
+            <div class="col-eight md-six tab-full popular">
+                <h3>Popular Posts</h3>
+
+                <div class="block-1-2 block-m-full popular__posts">
+                    @Html.Action("LatestPostsPartial", "Home")
+
+                </div> <!-- end popular_posts -->
+            </div> <!-- end popular -->
+
+            <div class="col-four md-six tab-full about">
+                <h3>About Blogchu</h3>
+
+                <p>
+                    Read and share ideas from independent voices, world-class publications, and experts from around the globe. Everyone's welcome.
+                </p>
+
+                <ul class="about__social">
+                    <li>
+                        <a href="https://www.linkedin.com/in/alimustafa%C3%B6zbek/"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/alionboard/"><i class="fab fa-github" aria-hidden="true"></i></a>
+                    </li>
+                </ul>
+            </div> <!-- end about -->
+
+        </div> <!-- end row -->
+
+    </section><!-- end s-extra -->
+}

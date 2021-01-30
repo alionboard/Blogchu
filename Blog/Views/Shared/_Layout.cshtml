@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html>
+
+
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link href="~/Content/base.css" rel="stylesheet" />
+    <link href="~/Content/vendor.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.min.css" rel="stylesheet" />
+    @RenderSection("styles", false)
+
+    <!-- script
+    ================================================== -->
+    <script src="~/Scripts/modernizr.js"></script>
+    <script src="~/Scripts/pace.min.js"></script>
+
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+
+</head>
+<body id="top">
+    <!-- pageheader
+    ================================================== -->
+    <section class="s-pageheader s-pageheader--home">
+
+        <header class="header">
+            <div class="header__content row">
+
+                <div class="header__logo">
+                    <a class="logo" href="@Url.Action("Index","Home")">
+                        <img src="~/images/logo.png" alt="Homepage">
+                    </a>
+                </div> <!-- end header__logo -->
+
+                <ul class="header__social">
+                    <li>
+                        <a href="https://github.com/alionboard/"><i class="fab fa-github" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/alimustafa%C3%B6zbek/"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                    </li>
+                </ul> <!-- end header__social -->
+
+                <!--<a class="header__search-trigger" href="#0"></a>
+
+                <div class="header__search">
+
+                    <form role="search" method="get" class="header__search-form" action="#">
+                        <label>
+                            <span class="hide-content">Search for:</span>
+                            <input type="search" class="search-field" placeholder="Type Keywords" value="" name="s" title="Search for:" autocomplete="off">
+                        </label>
+                        <input type="submit" class="search-submit" value="Search">
+                    </form>
+
+                    <a href="#0" title="Close Search" class="header__overlay-close">Close</a>
+
+                </div>-->  <!-- end header__search -->
+
+
+                <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+                <nav class="header__nav-wrap">
+
+                    <h2 class="header__nav-heading h6">Site Navigation</h2>
+
+                    <ul class="header__nav">
+                        <li id="homePageli"><a href="@Url.Action("Index","Home")" title="">Home</a></li>
+                        <li class="has-children">
+                            <a href="#0" title="">Categories</a>
+                            <ul class="sub-menu">
+                                @Html.Action("CategoryNavPartial", "Category")
+                            </ul>
+                        </li>
+                        
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li id="myArticlesli"><a href="@Url.Action("Index","Profile")" title="">My Articles</a></li>
+                        }
+
+
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>@Html.ActionLink("Admin Panel", "Index", "Dashboard", new { area = "Admin" }, null)</li>
+                        }
+                        @Html.Partial("_LoginPartial")
+
+                    </ul> <!-- end header__nav -->
+
+                    <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
+
+                </nav> <!-- end header__nav-wrap -->
+
+            </div> <!-- header-content -->
+        </header> <!-- header -->
+
+        @RenderSection("welcome", required: false)
+
+
+    </section> <!-- end s-pageheader -->
+
+
+    @RenderBody()
+
+    @RenderSection("extraS", required: false)
+
+
+    <!-- s-footer
+    ================================================== -->
+    <footer class="s-footer">
+
+        <div class="s-footer__main">
+            <div class="row">
+
+                <div class="col-two md-four mob-full s-footer__sitelinks">
+
+                    <h4>Quick Links</h4>
+
+                    <ul class="s-footer__linklist">
+                        <li><a href="@Url.Action("Index","Home")" title="">Home</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li id="myArticlesli"><a href="@Url.Action("Index","Profile")" title="">My Articles</a></li>
+                        }
+
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>@Html.ActionLink("Admin Panel", "Index", "Dashboard", new { area = "Admin" }, null)</li>
+                        }
+                        @Html.Partial("_LoginPartial")
+                    </ul>
+
+                </div> <!-- end s-footer__sitelinks -->
+
+                <div class="col-two md-four mob-full s-footer__archives">
+
+                </div> <!-- end s-footer__archives -->
+
+                <div class="col-two md-four mob-full s-footer__social">
+                    <h4>Social</h4>
+                    <ul class="s-footer__linklist">
+                        <li><a href="https://www.linkedin.com/in/alimustafa%C3%B6zbek/">LinkedIn</a></li>
+                        <li><a href="https://github.com/alionboard/">Github</a></li>
+                    </ul>
+
+                </div> <!-- end s-footer__social -->
+
+                <div class="col-five md-full end s-footer__subscribe">
+
+                    <h4>Our Newsletter</h4>
+                    <div class="subscribe-form">
+                        <form id="mc-form" class="group" novalidate="true">
+
+                            <input type="email" value="" name="EMAIL" class="email" id="mc-email" placeholder="Email Address" required="">
+
+                            <input type="submit" name="subscribe" value="Send">
+
+                            <label for="mc-email" class="subscribe-message"></label>
+
+                        </form>
+                    </div>
+
+                </div> <!-- end s-footer__subscribe -->
+
+            </div>
+        </div> <!-- end s-footer__main -->
+
+        <div class="s-footer__bottom">
+            <div class="row">
+                <div class="col-full">
+                    <div class="s-footer__copyright">
+                        <span>© Copyright 2021 - Ali Mustafa Özbek</span>
+                    </div>
+
+                    <div class="go-top">
+                        <a class="smoothscroll" title="Back to Top" href="#top"></a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end s-footer__bottom -->
+
+    </footer> <!-- end s-footer -->
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">
+            <div class="line-scale">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="~/Scripts/plugins.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    @RenderSection("scripts", required: false)
+
+<script>
+        var activeLink = "@ViewBag.Title";
+        if (activeLink)
+        {
+            switch (activeLink) {
+                case "Home Page":
+                    $("#homePageli").addClass("current");
+                    break;
+                case "My Articles":
+                    $("#myArticlesli").addClass("current");
+                    break;
+                case "Log in":
+                    $("#loginli").addClass("current");
+                    break;
+                case "Register":
+                    $("#registerli").addClass("current");
+                    break;
+            }
+        }
+</script>
+</body>
+</html>

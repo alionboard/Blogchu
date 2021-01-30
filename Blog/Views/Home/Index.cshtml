@@ -1,0 +1,207 @@
+﻿@using Blog.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Article>
+@{
+    ViewBag.Title = "Home Page";
+    int i = 0;
+}
+
+
+@section welcome{@if (ViewBag.headerPosts != null)
+    {
+        <div class="pageheader-content row">
+            <div class="col-full">
+
+                <div class="featured">
+
+                    @foreach (var article in ViewBag.headerPosts)
+                    {
+                        if (i == 0)
+                        {
+                            <div class="featured__column featured__column--big">
+                                <div class="entry" style="background-image:url('../UploadedFile/@article.PhotoPath.Substring(14)');">
+
+                                    <div class="entry__content">
+                                        <h1><a href="@Url.Action("Index", "Article", new { id = article.Id })">@article.Title</a></h1>
+
+                                        <div class="entry__info">
+                                            <a href="#0" class="entry__profile-pic">
+                                                <img class="avatar" src="~/images/avatars/user-02.jpg" alt="">
+                                            </a>
+
+                                            <ul class="entry__meta">
+                                                <li>@article.ApplicationUser.Nickname</li>
+                                                <li>@article.ArticleTime.ToString("f")</li>
+                                            </ul>
+                                        </div>
+                                    </div> <!-- end entry__content -->
+
+                                </div> <!-- end entry -->
+                            </div> <!-- end featured__big -->
+                        }
+
+
+                        <div class="featured__column featured__column--small">
+
+                            @if (i == 1)
+                            {
+                                <div class="entry" style="background-image:url('../UploadedFile/@article.PhotoPath.Substring(14)');">
+
+                                    <div class="entry__content">
+
+                                        <h1><a href="@Url.Action("Index", "Article", new { id = article.Id })">@article.Title</a></h1>
+
+                                        <div class="entry__info">
+                                            <a href="#" class="entry__profile-pic">
+                                                <img class="avatar entry__profile-pic" src="~/images/avatars/user-03.jpg" alt="avatar">
+                                            </a>
+                                            <ul class="entry__meta">
+                                                <li>@article.ApplicationUser.Nickname</li>
+                                                <li>@article.ArticleTime.ToString("f")</li>
+                                            </ul>
+                                        </div>
+                                    </div> <!-- end entry__content -->
+
+                                </div> <!-- end entry -->
+                            }
+
+                            @if (i == 2)
+                            {
+                                <div class="entry" style="background-image:url('../UploadedFile/@article.PhotoPath.Substring(14)');">
+
+                                    <div class="entry__content">
+
+                                        <h1><a href="@Url.Action("Index", "Article", new { id = article.Id })">@article.Title</a></h1>
+
+                                        <div class="entry__info">
+                                            <a href="#" class="entry__profile-pic">
+                                                <img class="avatar entry__profile-pic" src="~/images/avatars/user-03.jpg" alt="avatar">
+                                            </a>
+                                            <ul class="entry__meta">
+                                                <li>@article.ApplicationUser.Nickname</li>
+                                                <li>@article.ArticleTime.ToString("f")</li>
+                                            </ul>
+                                        </div>
+                                    </div> <!-- end entry__content -->
+
+                                </div> <!-- end entry -->
+                            }
+
+                        </div> <!-- end featured__small -->
+                        i++;
+
+                    }
+
+                </div> <!-- end featured -->
+
+            </div> <!-- end col-full -->
+        </div> <!-- end pageheader-content row -->
+    }}
+
+<!-- s-content
+================================================== -->
+<section class="s-content">
+
+    <div class="row masonry-wrap">
+        <div class="masonry">
+
+            <div class="grid-sizer"></div>
+
+            @foreach (var article in Model)
+            {
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+
+                    <div class="entry__thumb text-center">
+                        <a href="@Url.Action("Index", "Article", new { id = article.Id })" class="entry__thumb-link">
+
+                            @if (!string.IsNullOrEmpty(article.PhotoPath))
+                            {
+                                <img class="img-fluid w-50" src="@article.PhotoPath" alt="@article.Title" />
+                            }
+                        </a>
+                    </div>
+
+                    <div class="entry__text">
+                        <div class="entry__header">
+
+                            <div class="entry__date">
+                                <a href="single-standard.html">@article.ArticleTime.Value.ToString("f")</a>
+                            </div>
+                            <h1 class="entry__title">
+                                <a href="@Url.Action("Index", "Article", new { id = article.Id })">@article.Title</a>
+                            </h1>
+
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                                @article.Summary
+                            </p>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                @foreach (var item in article.Categories)
+                                {
+                                    @Html.ActionLink(item.CategoryName, "Index", "Category", new { name = item.CategoryName }, null)
+                                }
+                            </span>
+                        </div>
+                    </div>
+
+                </article> <!-- end article -->
+            }
+
+
+        </div> <!-- end masonry -->
+    </div> <!-- end masonry-wrap -->
+
+    <div class="row">
+        <div class="col-full">
+            <nav class="pgn">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Home", new { page }))
+
+            </nav>
+        </div>
+    </div>
+
+</section>
+<!-- s-content -->
+
+@section extraS{
+
+    <!-- s-extra
+    ================================================== -->
+    <section class="s-extra">
+
+        <div class="row top">
+
+            <div class="col-eight md-six tab-full popular">
+                <h3>Latest Posts</h3>
+
+                <div class="block-1-2 block-m-full popular__posts">
+                    @Html.Action("LatestPostsPartial", "Home")
+                </div>
+            </div> <!-- end popular -->
+
+            <div class="col-four md-six tab-full about">
+                <h3>About Blogchu</h3>
+
+                <p>
+                    Read and share ideas from independent voices, world-class publications, and experts from around the globe. Everyone's welcome.
+                </p>
+
+                <ul class="about__social">
+                    <li>
+                        <a href="https://www.linkedin.com/in/alimustafa%C3%B6zbek/"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/alionboard/"><i class="fab fa-github" aria-hidden="true"></i></a>
+                    </li>
+                </ul> <!-- end header__social -->
+            </div> <!-- end about -->
+
+        </div> <!-- end row -->
+
+    </section>
+    <!-- end s-extra -->
+}

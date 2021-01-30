@@ -1,0 +1,13 @@
+﻿@using Blog.Models
+@model AddCommentViewModel
+
+@using (Html.BeginForm("ActionName", "ControllerName", FormMethod.Post, new { id = "frmAddComment" }))
+{
+    <fieldset>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.ArticleId)
+        @Html.TextAreaFor(x => x.Content, new { @class = "full-width", id = "cMessage", placeholder = "Your Message" })
+        <button type="submit" class="submit btn--primary btn--large full-width">Submit</button>
+        @Html.ValidationMessageFor(x => x.Content)
+    </fieldset>
+}

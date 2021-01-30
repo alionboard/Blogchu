@@ -1,0 +1,111 @@
+﻿@model Article
+@{
+    ViewBag.Title = "ArticleDetails";
+}
+
+
+<div class="tm-content-row tm-mt-big">
+    <div class="col-lg-12 tm-md-12 tm-sm-12 tm-col">
+        <div class="col-12 bg-white tm-block">
+            <div class="row justify-content-center"><h1>@Model.Title</h1></div>
+            @if (!string.IsNullOrEmpty(Model.PhotoPath))
+            {
+                <div class="row justify-content-center"><img class="img-fluid w-25 m-3" src="@Model.PhotoPath" alt="@Model.Title" /></div>
+            }
+            <div class="row justify-content-center">@Model.ArticleTime.Value.ToString("g")</div>
+            <div class="row justify-content-center"><p>@Model.ApplicationUser.UserName</p></div>
+
+            <div class="row justify-content-center">@string.Join(", ", Model.Categories.Select(x => x.CategoryName))</div>
+        </div>
+
+        @*<div class="col-12 d-flex bg-white tm-block h-100 text-wrap text-break justify-content-center">
+                <div class="col-12 col-xl-10">
+                    <p id="subContent" style="word-break: break-all;">@Model.Content.Substring(0, 299)<a href="javascript:void(0)" id="subLink"> Read More...</a></p>
+                </div>
+            </div>*@
+
+        <div class="col-12 bg-white tm-block h-100 justify-content-center text-wrap text-break" style=" word-break: break-all">
+            <div class="entry__excerpt">
+                <p>@Model.Summary</p>
+                <a href="#" id="subLink">Read More</a>
+
+                <div id="subContent" style="display:none;">         
+                        @Html.Raw(Model.Content)               
+                </div>
+            </div>
+
+            <div>
+
+
+            </div>
+            <a href="@Url.Action("DeleteArticle","AdminArticle",new { id=Model.Id, isReported=true})" class="btnDeleteArticle btn btn-danger mt-3">Delete Article</a>
+
+            <div class="col-12 d-flex bg-white tm-block h-100 justify-content-center">
+                <div class="col-12 col-xl-10">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped tm-table-striped-even mt-3" id="myTable">
+                            <thead>
+                                <tr class="tm-bg-gray">
+                                    <th scope="col">Comment</th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Publish Time</th>
+                                    <th scope="col">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var comment in Model.Comments)
+                                {
+                                    <tr>
+                                        <td class="tm-product-name">@comment.Content</td>
+                                        <td>@comment.ApplicationUser.UserName</td>
+                                        <td>@comment.CommentTime.Value.ToString("g")</td>
+                                        <td><a href="@Url.Action("DeleteComment","AdminArticle",new { id=comment.Id})" class="btnDeleteComment"><i class="fas fa-trash-alt tm-trash-icon"></i></a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>              
+        </div>
+    </div>
+
+    @section scripts{
+        <script>
+        $(".btnDeleteArticle").click(function () {
+
+            if (!confirm("Selected article will be deleted after this.")) {
+                return false;
+            };
+        });
+
+
+        $(document).ready(function () {
+
+            $('#myTable').DataTable();
+        });
+
+        $("#subLink").click(function () {
+            $("#subLink").hide();
+            $("#subContent").show();
+            $('html,body').animate({
+                scrollTop: $("#subContent").offset().top-100},'slow');
+        });
+
+        $(".btnDeleteComment").click(function () {
+
+            if (!confirm("Selected comment will be deleted after this.")) {
+                return false;
+            };
+        });
+
+        var commentDeleteProcess = "@TempData["commentProcess"]";
+        if (commentDeleteProcess) {
+            $('html,body').animate({
+                scrollTop: $("#myTable").offset().top - 50
+            }, 'slow');
+            toastr.success("Comment has been deleted successfully.");
+        }
+        </script>
+    }

@@ -1,0 +1,18 @@
+﻿@model List<Report>
+@{
+    int count = Model.Where(x => x.IsInvestigated == false).Count();
+
+
+}
+<li class="nav-item">
+    <a class="nav-link" id="reportsA" href="@Url.Action("Index", "Reports")">
+        Reports
+        @{ if (count == 0)
+            {
+                <span class="badge badge-pill badge-success">@count</span> }
+            else
+            {
+                <span class="badge badge-pill badge-danger">@count</span>}
+        }
+    </a>
+</li>

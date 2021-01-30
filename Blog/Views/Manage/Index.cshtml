@@ -1,0 +1,27 @@
+﻿@model Blog.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+
+<div style="background-color:white;padding:5em 0">
+    <h2 class="text-center">@ViewBag.Title.</h2>
+    <p class="text-center">@ViewBag.StatusMessage</p>
+    <h4 class="text-center">Change your account settings</h4>
+    <dl class="dl-horizontal text-center">
+        <dt class="text-center"></dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "text-center" })
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+            ]
+        </dd>
+
+    </dl>
+</div>
