@@ -102,7 +102,7 @@
                 </div>
                 <div class="modal-body">
                     @Html.AntiForgeryToken()
-                    @Html.Label("Report Category")
+                    @Html.Label("Category Name")
                     @Html.TextBox("categoryName", null, new { @class = "form-control", required = "required", maxlength = 30, minlength = 3 })
                     @Html.Label("Category Description")
                     @Html.TextArea("description", null, new { @class = "form-control", required = "required", maxlength = 300, minlength = 5 })

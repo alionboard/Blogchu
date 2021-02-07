@@ -43,7 +43,7 @@
             @if (User.Identity.IsAuthenticated)
             {
         <div class="full-width position-absolute d-flex">
-            @if (Model.Likes.Any(x => x.ApplicationUser.UserName == HttpContext.Current.User.Identity.Name))
+            @*@if (Model.Likes.Any(x => x.ApplicationUser.UserName == HttpContext.Current.User.Identity.Name))
             {
                 <a href="#" id="likeButton" data-article-like-id="@Model.Id" style="color:black"><i class="fas fa-thumbs-up" style="font-size:x-large; margin-right:10px;"></i></a> }
             else
@@ -51,7 +51,7 @@
                 <a href="#" id="likeButton" data-article-like-id="@Model.Id"><i class="fas fa-thumbs-up" style="font-size:x-large; margin-right:10px;"></i></a>
                 <span class="ml-1" id="LikeCount">@Model.Likes.Count()</span>
 
-            }
+            }*@
             @*<a href="#ex1" rel="modal:open"><i class="fas fa-flag" style="font-size:x-large"></i></a>*@
             <p><a id="btnFlag" href="#reportModal"><i class="fas fa-flag" style="color:red"></i></a></p>
         </div>
@@ -214,7 +214,7 @@
 
 
     <script>
-        $("body").on("click","[data-article-like-id]", function (e) {
+        @*$("body").on("click","[data-article-like-id]", function (e) {
             e.preventDefault();
             var likedArticleId = $(this).data("article-like-id")
 
@@ -241,7 +241,7 @@
                     toastr.error("Error occured while liking")
                 }
             });
-        });
+        });*@
 
 
         $("#frmAddComment").submit(function (event) {
