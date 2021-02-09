@@ -10,5 +10,7 @@ Password: Ankara1.
 Home Page  
 <img src='images/home.png' width='100%'>  
   
+   
+   
 Admin Panel Article Management Page  
 <img src='images/admin-article.png' width='100%'>  
