@@ -10,9 +10,9 @@ Password: Ankara1.
 -Admin can manage all articles and comments, add categories, ban or give a role to users and evaluate reports.  
   
 ## Home Page  
-<img src='images/home.png' width='100%'>  
+<img src='images/home.png' width='100%'>     
+ <br> 
   
-   
-   
+ 
 ## Admin Panel Article Management Page  
 <img src='images/admin-article.png' width='100%'>  
